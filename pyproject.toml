@@ -1,0 +1,66 @@
+[tool.poetry]
+name = "clean-architecture"
+version = "0.1.0"
+description = ""
+authors = ["Atrem Orlov <aigorevichorlov@sberbank.ru>",]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.1"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.4.2"
+ruff = "^0.5.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+skip-string-normalization = true
+line-length = 120
+
+[tool.ruff]
+line-length = 120
+extend-select = ["Q"]
+
+src = ["clean-architecture"]
+exclude = [".venv", ".git", "__pycache__", "build"]
+
+select = [
+    "E", # pycodestyle errors (settings from FastAPI, thanks, @tiangolo!)
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "C", # flake8-comprehensions
+    "B", # flake8-bugbear
+]
+ignore = [
+    "E501", # line too long, handled by black
+    "C901", # too complex
+    "B008", # Do not perform function call in argument defaults
+]
+
+[tool.ruff.flake8-quotes]
+inline-quotes = "single"
+
+[tool.ruff.isort]
+order-by-type = true
+relative-imports-order = "closest-to-furthest"
+extra-standard-library = ["typing"]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+known-first-party = []
+
+[tool.pytest.ini_options]
+addopts = "-vvv"
+testpaths = "tests"
+
+[tool.mypy]
+files = ["clean-architecture"]
